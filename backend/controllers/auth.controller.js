@@ -8,12 +8,12 @@ export const signup = async (req, res) => {
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if(!emailRegex.test(email)){
-            return res.status(400).json({error: "Invalid email format."});
+            return res.status(400).json({error: "Invalid email format"});
         }
 
         const existingUser = await User.findOne({ username });
         if(existingUser){
-            return res.status(400).json({error: "Username is already taken."})
+            return res.status(400).json({error: "Username is already taken"})
         }
 
         const existingEmail = await User.findOne({ email });
@@ -68,7 +68,7 @@ export const login = async (req, res) => {
         const isPasswordCorrect = await bcrypt.compare(password, user?.password || "");
 
         if(!user || !isPasswordCorrect){
-            return res.status(500).json({error: "Invalid username or password."})
+            return res.status(500).json({error: "Invalid username or password"})
         }
 
         generateTokenAndSetCookie(user._id, res);
@@ -105,6 +105,6 @@ export const getMe = async (req, res) => {
         res.status(200).json(user);
     } catch (error) {
         console.log("Error in getMe controller", error.message);
-        res.status(500).json({error: "Internal Server Error."});
+        res.status(500).json({error: "Internal Server Error"});
     }
 };
